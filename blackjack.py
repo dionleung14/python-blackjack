@@ -153,33 +153,6 @@ def play_a_round(player_hand, dealer_hand):
   players_actions(player_hand, dealer_hand)
 
 
-
 print_rules(upper_limit, dealer_hit_limit)
 
 play_a_round([],[])
-
-  # print('Enter "q" at any time to quit') # TODO: Implement lol
-
-# Round variables
-# TODO: implement replayability
-# while game_start == True:
-#   player_hand = []
-#   player_total = 0
-
-#   dealer_hand = []
-#   dealer_total = 0
-
-#   #   player gets dealt 2 cards
-#   player_hand.append(deal_card())
-#   player_hand.append(deal_card())
-
-#   #   dealer gets dealt 2 cards
-#   dealer_hand.append(deal_card())
-#   dealer_hand.append(deal_card())
-
-#   print_player_hand(player_hand, sum(player_hand))
-#   print_dealer_hand(dealer_hand, sum(dealer_hand))
-
-
-#   #   player's actions
-#   players_actions(player_hand)
