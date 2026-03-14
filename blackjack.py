@@ -6,7 +6,7 @@ from logs import *
 upper_limit = 21
 dealer_hit_limit = 16
 card_limit = 10
-
+game_start = True
 
 # Deal one card
 # TODO: account for 10, J, Q, K (if 10 or greater, make it 10)
@@ -14,16 +14,15 @@ card_limit = 10
 def deal_card():
   return randint(1, card_limit)
 
+# Receive player action for replay
+def get_play_again():
+  decision = input("\nWould you like to play again (y/n)?: ")
+  return decision
+
 # Receive player action for hit or stand
 def get_hit_stand_decision():
   decision = input("\nWould you like to hit (h) or stand (s)?: ")
   return decision
-
-# Actions when player chooses to HIT
-def hit_gameflow():
-  print('You chose to HIT')
-  player_hand.append(deal_card())
-  print_player_hand(player_hand, sum(player_hand))
 
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
@@ -39,6 +38,12 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
 # if the dealer's total is 22 or higher, the player wins
   if (sum(dealer_hand) > upper_limit):
     print("Dealer busted - You WIN!")
+    play_again = get_play_again()
+    if (play_again.lower() == 'y'):
+      print('playing again')
+      play_a_round([],[])
+    elif (play_again.lower() == 'n'):
+      print('thanks for playin')
     # return ?
 
 # if the dealer's total is 17 or higher (already true since we've exited the while loop)
@@ -48,19 +53,37 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
     print("Dealer has more than the player")
     print(f"Dealer's total = {sum(dealer_hand)}, player total = {player_total}")
     print("You LOSE")
+    play_again = get_play_again()
+    if (play_again.lower() == 'y'):
+      print('playing again')
+      play_a_round([],[])
+    elif (play_again.lower() == 'n'):
+      print('thanks for playin')
   
   elif (sum(dealer_hand) < player_total):
     print("You have more than the Dealer")
     print(f"Dealer's total = {sum(dealer_hand)}, player total = {player_total}")
     print("You WIN")
+    play_again = get_play_again()
+    if (play_again.lower() == 'y'):
+      print('playing again')
+      play_a_round([],[])
+    elif (play_again.lower() == 'n'):
+      print('thanks for playin')
 
   # Lastly, compare a tie (can this be an else and not elif?)
   elif (sum(dealer_hand) == player_total):
     print("Tie game!")
+    play_again = get_play_again()
+    if (play_again.lower() == 'y'):
+      print('playing again')
+      play_a_round([],[])
+    elif (play_again.lower() == 'n'):
+      print('thanks for playin')
 
 
 # This controls the player's actions
-def players_actions(player_hand):
+def players_actions(player_hand, dealer_hand):
 # player is provided option to either hit or stand
   decision = get_hit_stand_decision()
 
@@ -75,20 +98,31 @@ def players_actions(player_hand):
 # if the total is 20 or less
 # player is again provided option to either hit or stand (repeat (recursion, not while loop))
     if (sum(player_hand) <= upper_limit-1):
-      players_actions(player_hand)
+      players_actions(player_hand, dealer_hand)
 
 # if the total is exactly 21, player wins
 # TODO: allow for dealer to tie? aka go through dealer actions
     elif (sum(player_hand) == upper_limit):
       print("You WIN")
+      play_again = get_play_again()
+      if (play_again.lower() == 'y'):
+        print('playing again')
+        play_a_round([],[])
+      elif (play_again.lower() == 'n'):
+        print('thanks for playin')
     
 # if the total is over 21, player loses
 # TODO: allow for dealer to go through dealer actions?
     elif (sum(player_hand) > upper_limit):
       print("You lose, you BUSTED")
-      return
+      play_again = get_play_again()
+      if (play_again.lower() == 'y'):
+        print('playing again')
+        play_a_round([],[])
+      elif (play_again.lower() == 'n'):
+        print('thanks for playin')
     
-
+    
 # if stand, call the dealer's actions
   if decision.lower() == 's':
     summarize_stand_decision(player_hand, dealer_hand)
@@ -97,28 +131,53 @@ def players_actions(player_hand):
     dealers_actions(sum(player_hand), dealer_hit_limit, dealer_hand)
 
 
-# Round variables
-# TODO: implement replayability
-player_hand = []
-player_total = 0
+def play_a_round(player_hand, dealer_hand):
+  # player_hand = player_hand
+  # dealer_hand = dealer_hand
 
-dealer_hand = []
-dealer_total = 0
+  #   player gets dealt 2 cards
+  player_hand.append(deal_card())
+  player_hand.append(deal_card())
 
-# print('Enter "q" at any time to quit')
+  #   dealer gets dealt 2 cards
+  dealer_hand.append(deal_card())
+  dealer_hand.append(deal_card())
+
+  print_player_hand(player_hand, sum(player_hand))
+  print_dealer_hand(dealer_hand, sum(dealer_hand))
+
+
+  #   player's actions
+  players_actions(player_hand, dealer_hand)
+
+
+
 print_rules(upper_limit, dealer_hit_limit)
 
-#   player gets dealt 2 cards
-player_hand.append(deal_card())
-player_hand.append(deal_card())
+play_a_round([],[])
 
-#   dealer gets dealt 2 cards
-dealer_hand.append(deal_card())
-dealer_hand.append(deal_card())
+  # print('Enter "q" at any time to quit') # TODO: Implement lol
 
-print_player_hand(player_hand, sum(player_hand))
-print_dealer_hand(dealer_hand, sum(dealer_hand))
+# Round variables
+# TODO: implement replayability
+# while game_start == True:
+#   player_hand = []
+#   player_total = 0
+
+#   dealer_hand = []
+#   dealer_total = 0
+
+#   #   player gets dealt 2 cards
+#   player_hand.append(deal_card())
+#   player_hand.append(deal_card())
+
+#   #   dealer gets dealt 2 cards
+#   dealer_hand.append(deal_card())
+#   dealer_hand.append(deal_card())
+
+#   print_player_hand(player_hand, sum(player_hand))
+#   print_dealer_hand(dealer_hand, sum(dealer_hand))
 
 
-#   player's actions
-players_actions(player_hand)
+#   #   player's actions
+#   players_actions(player_hand)
