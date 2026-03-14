@@ -53,11 +53,6 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
     print("Dealer busted - You WIN!")
     play_again = get_play_again()
     handle_play_again(play_again)
-    # if (play_again.lower() == 'y'):
-    #   play_another()
-    # elif (play_again.lower() == 'n'):
-    #   end_game()
-    # return ?
 
 # if the dealer's total is 17 or higher (already true since we've exited the while loop)
 # but not more than 21 (already true since we've passed the first if-condition)
@@ -68,31 +63,18 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
     print("You LOSE")
     play_again = get_play_again()
     handle_play_again(play_again)
-    # if (play_again.lower() == 'y'):
-    #   play_another()
-    # elif (play_again.lower() == 'n'):
-    #   end_game()
   
   elif (sum(dealer_hand) < player_total):
     print("You have more than the Dealer")
     print(f"Dealer's total = {sum(dealer_hand)}, player total = {player_total}")
     print("You WIN")
     play_again = get_play_again()
-    handle_play_again(play_again)
-    # if (play_again.lower() == 'y'):
-    #   play_another()
-    # elif (play_again.lower() == 'n'):
-    #   end_game()
 
   # Lastly, compare a tie (can this be an else and not elif?)
   elif (sum(dealer_hand) == player_total):
     print("Tie game!")
     play_again = get_play_again()
     handle_play_again(play_again)
-    # if (play_again.lower() == 'y'):
-    #   play_another()
-    # elif (play_again.lower() == 'n'):
-    #   end_game()
 
 
 # This controls the player's actions
@@ -119,10 +101,6 @@ def players_actions(player_hand, dealer_hand):
       print("You WIN")
       play_again = get_play_again()
       handle_play_again(play_again)
-      # if (play_again.lower() == 'y'):
-      #   play_another()
-      # elif (play_again.lower() == 'n'):
-      #   end_game()
     
 # if the total is over 21, player loses
 # TODO: allow for dealer to go through dealer actions?
@@ -130,10 +108,6 @@ def players_actions(player_hand, dealer_hand):
       print("You lose, you BUSTED")
       play_again = get_play_again()
       handle_play_again(play_again)
-      # if (play_again.lower() == 'y'):
-      #   play_another()
-      # elif (play_again.lower() == 'n'):
-      #   end_game()
     
     
 # if stand, call the dealer's actions
@@ -145,9 +119,6 @@ def players_actions(player_hand, dealer_hand):
 
 
 def play_a_round(player_hand, dealer_hand):
-  # player_hand = player_hand
-  # dealer_hand = dealer_hand
-
   #   player gets dealt 2 cards
   player_hand.append(deal_card())
   player_hand.append(deal_card())
@@ -166,4 +137,5 @@ def play_a_round(player_hand, dealer_hand):
 
 print_rules(upper_limit, dealer_hit_limit)
 
+# Start a round with empty hands
 play_a_round([],[])
