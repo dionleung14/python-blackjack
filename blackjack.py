@@ -62,8 +62,7 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
 # if the dealer's total is 22 or higher, the player wins
   if (sum_hand_face(dealer_hand) > upper_limit):
     print("Dealer busted - You WIN!")
-    play_again = get_play_again()
-    handle_play_again(play_again)
+    handle_play_again(get_play_again())
 
 # if the dealer's total is 17 or higher (already true since we've exited the while loop)
 # but not more than 21 (already true since we've passed the first if-condition)
@@ -72,8 +71,7 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
     print("Dealer has more than the player")
     print(f"Dealer's total = {sum_hand_face(dealer_hand)}, player total = {player_total}")
     print("You LOSE")
-    play_again = get_play_again()
-    handle_play_again(play_again)
+    handle_play_again(get_play_again())
   
   elif (sum_hand_face(dealer_hand) < player_total):
     print("You have more than the Dealer")
@@ -84,8 +82,7 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
   # Lastly, compare a tie (can this be an else and not elif?)
   elif (sum_hand_face(dealer_hand) == player_total):
     print("Tie game!")
-    play_again = get_play_again()
-    handle_play_again(play_again)
+    handle_play_again(get_play_again())
 
 
 # This controls the player's actions
@@ -110,15 +107,13 @@ def players_actions(player_hand, dealer_hand):
 # TODO: allow for dealer to tie? aka go through dealer actions
     elif (sum_hand_face(player_hand) == upper_limit):
       print("You WIN")
-      play_again = get_play_again()
-      handle_play_again(play_again)
+      handle_play_again(get_play_again())
     
 # if the total is over 21, player loses
 # TODO: allow for dealer to go through dealer actions?
     elif (sum_hand_face(player_hand) > upper_limit):
       print("You lose, you BUSTED")
-      play_again = get_play_again()
-      handle_play_again(play_again)
+      handle_play_again(get_play_again())
     
     
 # if stand, call the dealer's actions
