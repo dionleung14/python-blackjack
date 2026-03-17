@@ -140,8 +140,10 @@ def play_a_round(player_hand, dealer_hand):
   #   player's actions
   players_actions(player_hand, dealer_hand)
 
-
-print_rules(upper_limit, dealer_hit_limit)
-
+def main():
+  print_rules(upper_limit, dealer_hit_limit)
 # Start a round with empty hands
-play_a_round([],[])
+  play_a_round([],[])
+
+if __name__ == "__main__":
+  main()
