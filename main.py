@@ -52,12 +52,18 @@ def get_hit_stand_decision():
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
 def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
+  print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
+  print("Dealer must reveal their hand!!!\n")
+  print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 # if the dealer's total is 16 (hit limit) or less, must hit (repeat)
-  while (sum_hand_face(dealer_hand) <= dealer_hit_limit):
-    print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand))
-    print("Dealer must hit - New hand:")
-    dealer_hand.append(deal_card_face())
-    print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand))
+  if (sum_hand_face(dealer_hand) <= dealer_hit_limit):
+    print("Dealer must hit!!!!!!!!!!!!!!")
+    while (sum_hand_face(dealer_hand) <= dealer_hit_limit):
+      print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
+
+      print("Dealer must hit - New hand:")
+      dealer_hand.append(deal_card_face(dealer_bool=True))
+      print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
 # once the dealer's total breaks the hit limit (16), evaluate the end conditions:
 # if the dealer's total is 22 or higher, the player wins
@@ -93,11 +99,11 @@ def players_actions(player_hand, dealer_hand):
 
 # if hit
   if decision.lower() == 'h':
-    print_player_hand(player_hand, sum_hand_face(player_hand))
+    # print_player_hand(player_hand, sum_hand_face(player_hand))
     print("You chose to HIT! Dealing you a card...\n")
 #   player gets dealt 1 card
     player_hand.append(deal_card_face(dealer_bool=False))
-    print(f"Dealt card: {player_hand[len(player_hand - 1)]}")
+    print(f"Dealt card: {player_hand[len(player_hand) - 1]["face"]}")
     print_player_hand(player_hand, sum_hand_face(player_hand))
 
 # if the total is 20 or less
@@ -122,7 +128,7 @@ def players_actions(player_hand, dealer_hand):
   if decision.lower() == 's':
     summarize_stand_decision(player_hand, dealer_hand)
 
-    print("\nDealer's actions\n")
+    print("\nDealer's actions::::::::\n")
     dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand)
 
 
@@ -137,7 +143,7 @@ def play_a_round(player_hand, dealer_hand):
   dealer_hand.append(deal_card_face(dealer_bool=True))
 
   print_player_hand(player_hand, sum_hand_face(player_hand))
-  print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand))
+  print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
 
   #   player's actions
   players_actions(player_hand, dealer_hand)

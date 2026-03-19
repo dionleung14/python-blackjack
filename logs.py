@@ -7,39 +7,43 @@ def print_player_hand(hand, sum):
   # print(f'Your hand: {hand} - Your total is {sum}')
   print(f'Your hand: {player_cards} - Your total is {sum}')
 
-def print_dealer_hand(hand, sum):
+# TODO: this will hide the hand forever i think?
+def print_dealer_hand(hand, sum, display):
   dealer_cards = [] # Can this be a linked list...????
   for idx, card in enumerate(hand):
     if card["dealer_bool"] == True:
-      print("dealing a card to the dealer")
-      print(f"this is card number {idx + 1}")
-      print("previous state: \n")
-      print(card)
+      # print("dealing a card to the dealer")
+      # print(f"this is card number {idx + 1}")
+      # print("previous state: \n")
+      # print(card)
 
       # card["next"] = cards[ idx + 1 ] if cards[idx + 1] == True else None
       if (idx < len(hand) - 1):
-        print(f"next exists, the index is {idx} and the length is {len(hand)}")
+        # print(f"next exists, the index is {idx} and the length is {len(hand)}")
         card["next"] = hand[ idx + 1 ]
       else:
-        print("next does not exist")
+        # print("next does not exist")
         card["next"] = "none to see"
       # card["next"] = hand[ idx + 1 ] if (0 <= idx < len(hand)) else "None"
-      print("added next")
-      print(card)
+      # print("added next")
+      # print(card)
       # cards_to_display.append(card["face"])
       dealer_cards.append(card)
   # print(f'\nDealer\'s hand: {hand} - Dealer\'s total is {sum}')
-  print("exited for loop")
+  # print("exited for loop")
   cards_to_display = [] # Can this be a linked list...????
-  print(cards_to_display)
   for idx, card in enumerate(dealer_cards):
-    if card["next"] == "none to see":
+    if card["next"] == "none to see" and display == False:
       cards_to_display.append( " * " )  
     else:
       cards_to_display.append(card["face"])
+  # print(cards_to_display)
 
-  print(f'\nDealer\'s hand: {cards_to_display}  - Dealer\'s total is {sum - dealer_cards[1]["value"]}')
-  # print(f'\nDealer\'s hand: {cards_to_display if cards_to_display["next"] != None else " * * "} - Dealer\'s total is 511111111')
+  if display == False:
+    print(f'\nDealer\'s hand: {cards_to_display}  - Dealer\'s total is {sum - dealer_cards[1]["value"]}')
+  else:
+    print(f'\nDealer\'s hand: {cards_to_display}  - Dealer\'s total is {sum}')
+
 
 def summarize_stand_decision(player_hand, dealer_hand):
   print("\nYou chose to STAND")
@@ -47,7 +51,8 @@ def summarize_stand_decision(player_hand, dealer_hand):
   print_player_hand(player_hand, sum_hand_face(player_hand))
   print("\nTime for the dealer to play:")
   # print_dealer_hand(dealer_hand, sum(dealer_hand))
-  print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand))
+  # print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
+  # print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
 def print_rules(upper_limit, dealer_hit_limit):
   print("Let's play Blackjack!")
