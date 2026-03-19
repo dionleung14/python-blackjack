@@ -16,7 +16,6 @@ card_mapper = {
 
 # Deal one card with face cards
 # TODO: account for A being 1 or 11
-# TODO: hide a dealer card until dealer turn
 def deal_card_face(dealer_bool):
   card_value = randint(1, card_limit)
   if card_value < 11:
@@ -60,24 +59,19 @@ def player_dealer_tie(dealer_hand, player_total):
   print("Tie game!")
   print(f"Dealer's total = {sum_hand_face(dealer_hand)}, player total = {player_total}")
 
-# Receive player action for hit or stand
-# def get_hit_stand_decision():
-#   decision = input("\nWould you like to hit (h) or stand (s)?: ")
-#   return decision
-
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
 def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
   print("Dealer must reveal their hand!\n")
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
+
 # if the dealer's total is 16 (hit limit) or less, must hit (repeat)
   if (sum_hand_face(dealer_hand) <= dealer_hit_limit):
-    print("Dealer must hit!!!!!!!!!!!!!!")
     while (sum_hand_face(dealer_hand) <= dealer_hit_limit):
+      print("Dealer must hit:")
       print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
-      print("Dealer must hit - New hand:")
       dealer_hand.append(deal_card_face(dealer_bool=True))
       print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
@@ -106,7 +100,11 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
 
 
 # This controls the player's actions
+# Recursive function if the player is allowed to make a hit or stand decision
 def players_actions(player_hand, dealer_hand):
+
+  # TODO: automatic win condition on blackjack (2 card 21)
+    
 # player is provided option to either hit or stand
   decision = get_hit_stand_decision()
 
@@ -151,7 +149,6 @@ def play_a_round(player_hand, dealer_hand):
   player_hand.append(deal_card_face(dealer_bool=False))
 
   #   dealer gets dealt 2 cards
-  # TODO: hide one card from the Dealer - IP
   dealer_hand.append(deal_card_face(dealer_bool=True))
   dealer_hand.append(deal_card_face(dealer_bool=True))
 

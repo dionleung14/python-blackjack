@@ -1,5 +1,7 @@
 from util import *
 
+next_card = "None; this is the last card"
+
 def print_player_hand(hand, sum):
   player_cards = []
   for card in hand:
@@ -7,7 +9,6 @@ def print_player_hand(hand, sum):
   # print(f'Your hand: {hand} - Your total is {sum}')
   print(f'Your hand: {player_cards} - Your total is {sum}')
 
-# TODO: this will hide the hand forever i think?
 def print_dealer_hand(hand, sum, display):
   dealer_cards = [] # Can this be a linked list...????
   for idx, card in enumerate(hand):
@@ -15,12 +16,13 @@ def print_dealer_hand(hand, sum, display):
       if (idx < len(hand) - 1):
         card["next"] = hand[ idx + 1 ]
       else:
-        card["next"] = "none to see"
+        card["next"] = next_card
       dealer_cards.append(card)
-  cards_to_display = [] # Can this be a linked list...????
+  
+  cards_to_display = []
   for idx, card in enumerate(dealer_cards):
-    if card["next"] == "none to see" and display == False:
-      cards_to_display.append( " * " )  
+    if card["next"] == next_card and display == False:
+      cards_to_display.append( "***" )  
     else:
       cards_to_display.append(card["face"])
 
