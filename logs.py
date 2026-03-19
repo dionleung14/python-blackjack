@@ -1,16 +1,18 @@
 from util import *
 
 def print_player_hand(hand, sum):
-  cards = []
+  player_cards = []
   for card in hand:
-    cards.append(card["face"])
+    player_cards.append(card["face"])
   # print(f'Your hand: {hand} - Your total is {sum}')
-  print(f'Your hand: {cards} - Your total is {sum}')
+  print(f'Your hand: {player_cards} - Your total is {sum}')
 
 def print_dealer_hand(hand, sum):
-  cards = []
+  cards = [] # Can this be a linked list...????
   for card in hand:
-    cards.append(card["face"])
+    if card["dealer_bool"] == True:
+
+      cards.append(card["face"])
   # print(f'\nDealer\'s hand: {hand} - Dealer\'s total is {sum}')
   print(f'\nDealer\'s hand: {cards} - Dealer\'s total is {sum}')
 

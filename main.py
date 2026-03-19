@@ -17,13 +17,13 @@ card_mapper = {
 # Deal one card with face cards
 # TODO: account for A being 1 or 11
 # TODO: hide a dealer card until dealer turn
-def deal_card_face():
+def deal_card_face(dealer_bool):
   card_value = randint(1, card_limit)
   if card_value < 11:
-    return {"face": card_value, "value": card_value}
+    return {"face": card_value, "value": card_value, "dealer_bool": dealer_bool}
   elif card_value >= 11:
     face_card_letter = card_mapper[card_value]
-    return {"face": face_card_letter, "value": 10}
+    return {"face": face_card_letter, "value": 10, "dealer_bool": dealer_bool}
 
 # Receive player action for replay
 def get_play_again():
@@ -127,13 +127,13 @@ def players_actions(player_hand, dealer_hand):
 
 def play_a_round(player_hand, dealer_hand):
   #   player gets dealt 2 cards
-  player_hand.append(deal_card_face())
-  player_hand.append(deal_card_face())
+  player_hand.append(deal_card_face(dealer_bool=False))
+  player_hand.append(deal_card_face(dealer_bool=False))
 
   #   dealer gets dealt 2 cards
-  # TODO: hide one card from the Dealer
-  dealer_hand.append(deal_card_face())
-  dealer_hand.append(deal_card_face())
+  # TODO: hide one card from the Dealer - IP
+  dealer_hand.append(deal_card_face(dealer_bool=True))
+  dealer_hand.append(deal_card_face(dealer_bool=True))
 
   print_player_hand(player_hand, sum_hand_face(player_hand))
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand))
