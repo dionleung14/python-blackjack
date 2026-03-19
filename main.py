@@ -69,7 +69,7 @@ def player_dealer_tie(dealer_hand, player_total):
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
 def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
-  print("Dealer must reveal their hand!!!\n")
+  print("Dealer must reveal their hand!\n")
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 # if the dealer's total is 16 (hit limit) or less, must hit (repeat)
   if (sum_hand_face(dealer_hand) <= dealer_hit_limit):
@@ -141,7 +141,7 @@ def players_actions(player_hand, dealer_hand):
   if decision.lower() == 's':
     summarize_stand_decision(player_hand, dealer_hand)
 
-    print("\nDealer's actions::::::::\n")
+    print("\n------------------Dealer's actions-------------------\n")
     dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand)
 
 
