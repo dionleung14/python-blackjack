@@ -20,10 +20,10 @@ card_mapper = {
 def deal_card_face(dealer_bool):
   card_value = randint(1, card_limit)
   if card_value < 11:
-    return {"face": card_value, "value": card_value, "dealer_bool": dealer_bool}
+    return {"face": card_value, "value": card_value, "dealer_bool": dealer_bool, "next": "temp"}
   elif card_value >= 11:
     face_card_letter = card_mapper[card_value]
-    return {"face": face_card_letter, "value": 10, "dealer_bool": dealer_bool}
+    return {"face": face_card_letter, "value": 10, "dealer_bool": dealer_bool, "next": "temp"}
 
 # Receive player action for replay
 def get_play_again():
@@ -94,9 +94,10 @@ def players_actions(player_hand, dealer_hand):
 # if hit
   if decision.lower() == 'h':
     print_player_hand(player_hand, sum_hand_face(player_hand))
-    print("You chose to HIT - New hand:")
+    print("You chose to HIT! Dealing you a card...\n")
 #   player gets dealt 1 card
-    player_hand.append(deal_card_face())
+    player_hand.append(deal_card_face(dealer_bool=False))
+    print(f"Dealt card: {player_hand[len(player_hand - 1)]}")
     print_player_hand(player_hand, sum_hand_face(player_hand))
 
 # if the total is 20 or less
