@@ -16,13 +16,14 @@ card_mapper = {
 
 # Deal one card with face cards
 # TODO: account for A being 1 or 11
+# TODO: hide a dealer card until dealer turn
 def deal_card_face():
   card_value = randint(1, card_limit)
   if card_value < 11:
     return {"face": card_value, "value": card_value}
   elif card_value >= 11:
-    letter = card_mapper[card_value]
-    return {"face": letter, "value": 10}
+    face_card_letter = card_mapper[card_value]
+    return {"face": face_card_letter, "value": 10}
 
 # Receive player action for replay
 def get_play_again():
