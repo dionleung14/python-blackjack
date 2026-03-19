@@ -43,10 +43,26 @@ def handle_play_again(decision):
   elif (decision.lower() == 'n'):
     end_game()
 
+def player_wins(dealer_hand, player_total):
+  print("You have more than the Dealer")
+  print(f"Your total = {player_total}")
+  print(f"Dealer's total = {sum_hand_face(dealer_hand)}")
+  print("You WIN")
+
+def player_loses(dealer_hand, player_total):
+  print("Dealer has more than the player")
+  print(f"Your total = {player_total}")
+  print(f"Dealer's total = {sum_hand_face(dealer_hand)}")
+  print("You LOSE")
+
+def player_dealer_tie(dealer_hand, player_total):
+  print("Tie game!")
+  print(f"Dealer's total = {sum_hand_face(dealer_hand)}, player total = {player_total}")
+
 # Receive player action for hit or stand
-def get_hit_stand_decision():
-  decision = input("\nWould you like to hit (h) or stand (s)?: ")
-  return decision
+# def get_hit_stand_decision():
+#   decision = input("\nWould you like to hit (h) or stand (s)?: ")
+#   return decision
 
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
@@ -68,20 +84,17 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
 # but not more than 21 (already true since we've passed the first if-condition)
 # compare the dealer's total to the player's total (win or loss)
   elif (sum_hand_face(dealer_hand) > player_total):
-    print("Dealer has more than the player")
-    print(f"Dealer's total = {sum_hand_face(dealer_hand)}, player total = {player_total}")
-    print("You LOSE")
+    player_loses(dealer_hand, player_total)
     handle_play_again(get_play_again())
   
   elif (sum_hand_face(dealer_hand) < player_total):
-    print("You have more than the Dealer")
-    print(f"Dealer's total = {sum_hand_face(dealer_hand)}, player total = {player_total}")
-    print("You WIN")
-    play_again = get_play_again()
+    player_wins(dealer_hand, player_total)
+    handle_play_again(get_play_again())
+    # play_again = get_play_again()
 
   # Lastly, compare a tie (can this be an else and not elif?)
   elif (sum_hand_face(dealer_hand) == player_total):
-    print("Tie game!")
+    player_dealer_tie(dealer_hand, player_total)
     handle_play_again(get_play_again())
 
 
