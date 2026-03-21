@@ -1,6 +1,7 @@
 from random import randint
 from logs import *
 from util import *
+import time
 
 #   Game variables
 upper_limit = 21
@@ -63,15 +64,16 @@ def player_dealer_tie(dealer_hand, player_total):
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
 def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
+  time.sleep(1)
   print("Dealer must reveal their hand!\n")
+  time.sleep(1)
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
 # if the dealer's total is 16 (hit limit) or less, must hit (repeat)
   if (sum_hand_face(dealer_hand) <= dealer_hit_limit):
     while (sum_hand_face(dealer_hand) <= dealer_hit_limit):
       print("Dealer must hit:")
-      print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
-
+      time.sleep(1.5)
       dealer_hand.append(deal_card_face(dealer_bool=True))
       print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
