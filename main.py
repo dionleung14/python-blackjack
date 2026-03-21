@@ -36,6 +36,8 @@ def end_game():
 def play_another():
   print('\nPlaying again\n')
   print('Good luck!!\n')
+  print('Dealing a new hand...')
+  time.sleep(0.8)
   play_a_round([],[])
 
 def handle_play_again(decision):
@@ -63,9 +65,10 @@ def player_dealer_tie(dealer_hand, player_total):
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
 def dealers_actions(player_total, dealer_hit_limit, dealer_hand, player_busted):
+  print("\n------------------Dealer's actions-------------------\n")
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
   time.sleep(1)
-  print("Dealer must reveal their hand!\n")
+  print("Dealer must reveal their hand!")
   time.sleep(1)
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
@@ -73,7 +76,7 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand, player_busted):
   if (sum_hand_face(dealer_hand) <= dealer_hit_limit):
     while (sum_hand_face(dealer_hand) <= dealer_hit_limit):
       print("Dealer must hit:")
-      time.sleep(1.5)
+      time.sleep(1.3)
       dealer_hand.append(deal_card_face(dealer_bool=True))
       print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=True)
 
@@ -114,6 +117,11 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand, player_busted):
 def players_actions(player_hand, dealer_hand):
 
   # TODO: automatic win condition on blackjack (2 card 21)
+  # prerequisite is making the A be 1 or 11
+  if (sum_hand_face(player_hand) == upper_limit and len(player_hand == 2)):
+    print("looks like you hit blackjack! you win!")
+    handle_play_again(get_play_again())
+    
     
 # player is provided option to either hit or stand
   decision = get_hit_stand_decision()
@@ -122,6 +130,7 @@ def players_actions(player_hand, dealer_hand):
   if decision.lower() == 'h':
     # print_player_hand(player_hand, sum_hand_face(player_hand))
     print("You chose to HIT! Dealing you a card...\n")
+    time.sleep(1)
 #   player gets dealt 1 card
     player_hand.append(deal_card_face(dealer_bool=False))
     print(f"Dealt card: {player_hand[len(player_hand) - 1]["face"]}")
@@ -144,18 +153,12 @@ def players_actions(player_hand, dealer_hand):
     elif (sum_hand_face(player_hand) > upper_limit):
       print("You lose, you BUSTED")
       print("Let's see what would have happened if you chose to STAND")
-
-      print("\n------------------Dealer's actions-------------------\n")
       dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand, player_busted=True)
-    
-    
+        
 # if stand, call the dealer's actions
   if decision.lower() == 's':
     summarize_stand_decision(player_hand, dealer_hand)
-
-    print("\n------------------Dealer's actions-------------------\n")
     dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand, player_busted=False)
-
 
 def play_a_round(player_hand, dealer_hand):
   #   player gets dealt 2 cards
