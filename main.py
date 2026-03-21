@@ -62,7 +62,7 @@ def player_dealer_tie(dealer_hand, player_total):
 
 # This is everything the dealer does when player stops playing
 # Define it before player actions bc player actions calls this? What is Python's compilation order?
-def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
+def dealers_actions(player_total, dealer_hit_limit, dealer_hand, player_busted):
   print_dealer_hand(dealer_hand, sum_hand_face(dealer_hand), display=False)
   time.sleep(1)
   print("Dealer must reveal their hand!\n")
@@ -79,8 +79,13 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
 
 # once the dealer's total breaks the hit limit (16), evaluate the end conditions:
 # if the dealer's total is 22 or higher, the player wins
-  if (sum_hand_face(dealer_hand) > upper_limit):
+  if (sum_hand_face(dealer_hand) > upper_limit and player_busted == False):
     print("Dealer busted - You WIN!")
+    handle_play_again(get_play_again())
+
+  # if the dealer's total is 22 or higher but the player has already busted, player loses
+  elif (sum_hand_face(dealer_hand) > upper_limit and player_busted == True):
+    print("Shouldn't have hit, the Dealer would have busted womp womp")
     handle_play_again(get_play_again())
 
 # if the dealer's total is 17 or higher (already true since we've exited the while loop)
@@ -90,10 +95,13 @@ def dealers_actions(player_total, dealer_hit_limit, dealer_hand):
     player_loses(dealer_hand, player_total)
     handle_play_again(get_play_again())
   
-  elif (sum_hand_face(dealer_hand) < player_total):
+  elif (sum_hand_face(dealer_hand) < player_total and player_busted == True):
+    print("Looks like the dealer would not have busted :/")
+    handle_play_again(get_play_again())
+
+  elif (sum_hand_face(dealer_hand) < player_total and player_busted == False):
     player_wins(dealer_hand, player_total)
     handle_play_again(get_play_again())
-    # play_again = get_play_again()
 
   # Lastly, compare a tie (can this be an else and not elif?)
   elif (sum_hand_face(dealer_hand) == player_total):
@@ -132,9 +140,13 @@ def players_actions(player_hand, dealer_hand):
     
 # if the total is over 21, player loses
 # TODO: allow for dealer to go through dealer actions?
+# TODO: debug the different win and lose conditions if the dealer continues their actions
     elif (sum_hand_face(player_hand) > upper_limit):
       print("You lose, you BUSTED")
-      handle_play_again(get_play_again())
+      print("Let's see what would have happened if you chose to STAND")
+
+      print("\n------------------Dealer's actions-------------------\n")
+      dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand, player_busted=True)
     
     
 # if stand, call the dealer's actions
@@ -142,7 +154,7 @@ def players_actions(player_hand, dealer_hand):
     summarize_stand_decision(player_hand, dealer_hand)
 
     print("\n------------------Dealer's actions-------------------\n")
-    dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand)
+    dealers_actions(sum_hand_face(player_hand), dealer_hit_limit, dealer_hand, player_busted=False)
 
 
 def play_a_round(player_hand, dealer_hand):
